@@ -12,6 +12,7 @@ import {
   CardToolbar,
 } from "@/components/ui/card";
 import { Badge } from "../ui/badge";
+import { ScrollArea } from "../ui/scroll-area";
 
 // Player data by category
 const playerData = {
@@ -245,33 +246,37 @@ export default function PlayerList({ category }: PlayerListProps) {
       <CardContent className="py-1">
         {players.slice(0, MAX_PLAYERS_DISPLAYED).map((player) => {
           return (
-            <div
-              className="flex items-center justify-between gap-2 border-b border-dashed py-2 last:border-none"
-              key={player.id}
-            >
-              {/* Left: Team Logo and Player Info */}
-              <div className="flex items-center gap-3">
-                <TeamLogo size="md" teamCode={player.team} />
-                <div>
-                  <Link
-                    className="font-medium text-foreground text-sm hover:text-primary"
-                    href="#"
-                  >
-                    {player.name}
-                  </Link>
-                  <div className="font-normal text-muted-foreground text-sm">
-                    {player.team} • {player.position}
+            <ScrollArea className="h-[65px] pe-3.5" key={player.id}>
+              <div
+                className="flex items-center justify-between gap-2 border-b border-dashed py-2 last:border-none"
+                key={player.id}
+              >
+                {/* Left: Team Logo and Player Info */}
+                <div className="flex items-center gap-3">
+                  <TeamLogo size="md" teamCode={player.team} />
+                  <div>
+                    <Link
+                      className="font-medium text-foreground text-sm hover:text-primary"
+                      href="#"
+                    >
+                      {player.name}
+                    </Link>
+                    <div className="font-normal text-muted-foreground text-sm">
+                      {player.team} • {player.position}
+                    </div>
+                  </div>
+                </div>
+                {/* Right: Projected Salary */}
+                <div className="text-right">
+                  <div className="font-medium text-foreground text-sm">
+                    {formatSalary(player.salary)}
+                  </div>
+                  <div className="text-muted-foreground text-xs">
+                    Projected $
                   </div>
                 </div>
               </div>
-              {/* Right: Projected Salary */}
-              <div className="text-right">
-                <div className="font-medium text-foreground text-sm">
-                  {formatSalary(player.salary)}
-                </div>
-                <div className="text-muted-foreground text-xs">Projected $</div>
-              </div>
-            </div>
+            </ScrollArea>
           );
         })}
       </CardContent>

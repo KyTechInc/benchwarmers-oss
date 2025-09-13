@@ -1,4 +1,4 @@
-/** biome-ignore-all lint/nursery/noShadow: <explanation> */
+/** biome-ignore-all lint/nursery/noShadow: biome suppression for team interface */
 export type Team = {
   id: number;
   code: string;

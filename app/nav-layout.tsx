@@ -135,7 +135,7 @@ function NavLayout({ children }: { children: React.ReactNode }) {
   const { resolvedTheme } = useTheme();
 
   useEffect(() => {
-    // Mock favorite teams - in real app this would come from your database
+    // Mock favorite teams - TODO: add favorite teams from database / auth system
     const mockFavorites: FavoriteTeam[] = [
       { team_code: "BOS", team_name: "Boston Bruins" },
       { team_code: "TOR", team_name: "Toronto Maple Leafs" },

@@ -1,13 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "standalone",
   experimental: {
     browserDebugInfoInTerminal: true,
   },
   images: {
     remotePatterns: [
       {
+        //change in production
         protocol: "https",
         hostname: "**",
       },

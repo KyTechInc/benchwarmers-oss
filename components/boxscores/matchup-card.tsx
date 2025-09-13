@@ -61,7 +61,9 @@ function GameStatusBadge({
   isIntermission?: boolean;
 }): React.ReactElement {
   const getStatusColor = () => {
-    if (isIntermission) return "blue";
+    if (isIntermission) {
+      return "blue";
+    }
     switch (status) {
       case "live":
         return "red";
@@ -77,7 +79,9 @@ function GameStatusBadge({
   const isAnimated = isIntermission || ["live", "pre"].includes(status);
 
   const getStatusText = () => {
-    if (isIntermission) return "Intermission";
+    if (isIntermission) {
+      return "Intermission";
+    }
     switch (status) {
       case "pre":
         return "Scheduled";

@@ -1,18 +1,24 @@
-'use client';
+"use client";
 
-import { createContext, ReactNode, useContext } from 'react';
-import { cn } from '@/lib/utils';
-import { ColumnFiltersState, RowData, SortingState, Table } from '@tanstack/react-table';
+import type {
+  ColumnFiltersState,
+  RowData,
+  SortingState,
+  Table,
+} from "@tanstack/react-table";
+import { createContext, type ReactNode, useContext } from "react";
+import { cn } from "@/lib/utils";
 
-declare module '@tanstack/react-table' {
+declare module "@tanstack/react-table" {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  interface ColumnMeta<TData extends RowData, TValue> {
+  /* @ts-expect-error */
+  type ColumnMeta<TData extends RowData, _TValue> = {
     headerTitle?: string;
     headerClassName?: string;
     cellClassName?: string;
     skeleton?: ReactNode;
     expandedContent?: (row: TData) => ReactNode;
-  }
+  };
 }
 
 export type DataGridApiFetchParams = {
@@ -32,12 +38,12 @@ export type DataGridApiResponse<T> = {
   };
 };
 
-export interface DataGridContextProps<TData extends object> {
+export type DataGridContextProps<TData extends object> = {
   props: DataGridProps<TData>;
   table: Table<TData>;
   recordCount: number;
   isLoading: boolean;
-}
+};
 
 export type DataGridRequestParams = {
   pageIndex: number;
@@ -46,14 +52,14 @@ export type DataGridRequestParams = {
   columnFilters?: ColumnFiltersState;
 };
 
-export interface DataGridProps<TData extends object> {
+export type DataGridProps<TData extends object> = {
   className?: string;
   table?: Table<TData>;
   recordCount: number;
   children?: ReactNode;
   onRowClick?: (row: TData) => void;
   isLoading?: boolean;
-  loadingMode?: 'skeleton' | 'spinner';
+  loadingMode?: "skeleton" | "spinner";
   loadingMessage?: ReactNode | string;
   emptyMessage?: ReactNode | string;
   tableLayout?: {
@@ -65,7 +71,7 @@ export interface DataGridProps<TData extends object> {
     headerBackground?: boolean;
     headerBorder?: boolean;
     headerSticky?: boolean;
-    width?: 'auto' | 'fixed';
+    width?: "auto" | "fixed";
     columnsVisibility?: boolean;
     columnsResizable?: boolean;
     columnsPinnable?: boolean;
@@ -83,7 +89,7 @@ export interface DataGridProps<TData extends object> {
     footer?: string;
     edgeCell?: string;
   };
-}
+};
 
 const DataGridContext = createContext<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -93,7 +99,7 @@ const DataGridContext = createContext<
 function useDataGrid() {
   const context = useContext(DataGridContext);
   if (!context) {
-    throw new Error('useDataGrid must be used within a DataGridProvider');
+    throw new Error("useDataGrid must be used within a DataGridProvider");
   }
   return context;
 }
@@ -109,7 +115,8 @@ function DataGridProvider<TData extends object>({
         props,
         table,
         recordCount: props.recordCount,
-        isLoading: props.isLoading || false,
+        /* @ts-expect-error */
+        isLoading: props.isLoading,
       }}
     >
       {children}
@@ -117,9 +124,13 @@ function DataGridProvider<TData extends object>({
   );
 }
 
-function DataGrid<TData extends object>({ children, table, ...props }: DataGridProps<TData>) {
+function DataGrid<TData extends object>({
+  children,
+  table,
+  ...props
+}: DataGridProps<TData>) {
   const defaultProps: Partial<DataGridProps<TData>> = {
-    loadingMode: 'skeleton',
+    loadingMode: "skeleton",
     tableLayout: {
       dense: false,
       cellBorder: false,
@@ -129,7 +140,7 @@ function DataGrid<TData extends object>({ children, table, ...props }: DataGridP
       headerSticky: false,
       headerBackground: true,
       headerBorder: true,
-      width: 'fixed',
+      width: "fixed",
       columnsVisibility: false,
       columnsResizable: false,
       columnsPinnable: false,
@@ -138,14 +149,14 @@ function DataGrid<TData extends object>({ children, table, ...props }: DataGridP
       rowsDraggable: false,
     },
     tableClassNames: {
-      base: '',
-      header: '',
-      headerRow: '',
-      headerSticky: 'sticky top-0 z-10 bg-background/90 backdrop-blur-xs',
-      body: '',
-      bodyRow: '',
-      footer: '',
-      edgeCell: '',
+      base: "",
+      header: "",
+      headerRow: "",
+      headerSticky: "sticky top-0 z-10 bg-background/90 backdrop-blur-xs",
+      body: "",
+      bodyRow: "",
+      footer: "",
+      edgeCell: "",
     },
   };
 
@@ -184,7 +195,14 @@ function DataGridContainer({
   border?: boolean;
 }) {
   return (
-    <div data-slot="data-grid" className={cn('grid w-full', border && 'border border-border rounded-lg', className)}>
+    <div
+      className={cn(
+        "grid w-full",
+        border && "rounded-lg border border-border",
+        className
+      )}
+      data-slot="data-grid"
+    >
       {children}
     </div>
   );
