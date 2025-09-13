@@ -13,6 +13,9 @@
 
 Benchwarmers OSS is your ultimate NHL companion app, designed specifically for passionate hockey fans who want to dive deep into the numbers, contracts, and strategies that make the NHL fascinating. From detailed player statistics and salary breakdowns to interactive team management and game analysis, get the insights you need to understand the business and beauty of professional hockey.
 
+![Benchwarmers OSS Dashboard](https://github.com/KyTechInc/benchwarmers-oss/blob/main/assets/dashboard.webp)
+
+
 ### ✨ Key Features
 
 - **📊 Player Analytics**: Comprehensive statistics, salary data, and contract information
